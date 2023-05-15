@@ -1,0 +1,22 @@
+{% render "smsva" %}
+<style>
+#variants{
+    max-width: 500px !important;
+}
+.variant-select{
+    margin: 5px;
+    width: 40px;
+    height: 40px;
+    display: inline-block !important;
+}
+.selected{
+    background-color: gold;
+}
+</style>
+<script src="{{ 'sc_multiselect_variant_app.js' | asset_url }}" defer></script>
+{% schema %}
+{
+    "name" : "Selectify",
+    "target" : "section"
+}
+{% endschema %}
