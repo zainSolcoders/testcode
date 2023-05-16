@@ -20,10 +20,10 @@ class ShowProducts extends BaseListing
      *
      * @return mixed
      */
-    public function getProducts(Request $request)
+    public function getProducts(string $shop)
     {
         $products = Store::getAllProducts(
-            $request->shop,
+            $shop,
             $this->limit,
             $this->sinceId
         );
@@ -36,10 +36,10 @@ class ShowProducts extends BaseListing
      *
      * @return \Illuminate\View\View
      */
-    public function render()
+    public function render(Request $request)
     {
         return view('shopify.livewire.show-products', [
-            'products' => $this->getProducts(),
+            'products' => $this->getProducts($request->shop),
             'pages' => $this->getPaginations()
         ]);
     }

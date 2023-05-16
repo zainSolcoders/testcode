@@ -20,10 +20,10 @@ class ShowOrders extends BaseListing
      *
      * @return mixed
      */
-    public function getOrders(Request $request)
+    public function getOrders(string $shop)
     {
         $orders = Store::getOrders(
-            $request->shop,
+            $shop,
             $this->limit,
             $this->sinceId
         );
@@ -38,10 +38,10 @@ class ShowOrders extends BaseListing
      *
      * @return \Illuminate\View\View
      */
-    public function render()
+    public function render(Request $request)
     {
         return view('shopify.livewire.show-orders', [
-            'orders' => $this->getOrders(),
+            'orders' => $this->getOrders($request->shop),
             'pages' => $this->getPaginations()
         ]);
     }

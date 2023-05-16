@@ -20,10 +20,10 @@ class ShowCollections extends BaseListing
      *
      * @return mixed
      */
-    public function getCollections(Request $request)
+    public function getCollections(string $shop)
     {
         $collections = Store::getCollections(
-            $request->shop,
+            $shop,
             $this->limit,
             $this->sinceId
         );
@@ -36,10 +36,10 @@ class ShowCollections extends BaseListing
      *
      * @return \Illuminate\View\View
      */
-    public function render()
+    public function render(Request $request)
     {
         return view('shopify.livewire.show-collections', [
-            'collections' => $this->getCollections(),
+            'collections' => $this->getCollections($request->shop),
             'pages' => $this->getPaginations()
         ]);
     }
