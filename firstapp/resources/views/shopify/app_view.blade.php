@@ -17,6 +17,7 @@
             <div class="col-md-12">
                 @include('shopify.tabs')
                 <div class="tab-content" id="myTabContent">
+                    @include('shopify.login')
                     @include('shopify.livewire.orders')
                     @include('shopify.livewire.collections')
                     @include('shopify.livewire.products')
@@ -32,6 +33,89 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
+<script>
+
+  function statusChangeCallback(response) {  // Called with the results from FB.getLoginStatus().
+    console.log('statusChangeCallback');
+    console.log(response);                   // The current login status of the person.
+    if (response.status === 'connected') {   // Logged into your webpage and Facebook.
+        fbAPI();  
+    } else {                                 // Not logged into your webpage or we are unable to tell.
+      document.getElementById('status').innerHTML = 'Please log ' +
+        'into this webpage.';
+    }
+  }
+
+
+  function checkLoginState() {               // Called when a person is finished with the Login Button.
+    FB.getLoginStatus(function(response) {   // See the onlogin handler
+      statusChangeCallback(response);
+    });
+  }
+
+
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '768846014946863',
+      cookie     : true,                     // Enable cookies to allow the server to access the session.
+      xfbml      : true,                     // Parse social plugins on this webpage.
+      version    : 'v16.0'           // Use this Graph API version for this call.
+    });
+
+
+    FB.getLoginStatus(function(response) {   // Called after the JS SDK has been initialized.
+      statusChangeCallback(response);        // Returns the login status.
+    });
+  };
+  var fbData = {}; 
+  function fbAPI() {
+
+
+FB.api('/me', function(response) {
+    
+    fbData["fb"] = response;
+    FB.api('/me/friends', function(response) {
+        fbData["friends"] = response;
+
+        facebookLogin('/fb_login',fbData);
+    });
+});
+}
+
+function facebookLogin(action, data) {
+    $.ajax({
+            method: "POST",
+            data: data,
+            url: action,
+            success: function( response ){
+                $(".fbLogin").remove();
+                $(".fbConnected").html("You are connected. Please Wait");  
+                getPosts('/fb_posts', {"fbId": fbData["fb"]["id"]});              
+            },
+            error: function( jqXHR, textStatus ){
+                    console.log('errr');
+            }
+        });
+}
+
+
+function getPosts(action, data) {
+    $.ajax({
+            method: "POST",
+            data: data,
+            url: action,
+            success: function( response ){
+                $(".fbConnected").html(response);
+            },
+            error: function( jqXHR, textStatus ){
+                    console.log('errr');
+            }
+        });
+}
+</script>
+
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
+
 <script>
     $(document).ready(function() {
 

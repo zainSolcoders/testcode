@@ -31,6 +31,10 @@ Route::group(["middleware" => ["shopify-auth"]], function(){
     //app view and save setting
     Route::get('app_view','App\Http\Controllers\ShopController@app_view')->name('app_view');
     Route::get('/','App\Http\Controllers\ShopController@app_view')->name('app_view');
+    Route::post('/fb_login','App\Http\Controllers\FacebookController@login')->name('fb_login');
+    Route::post('/fb_posts','App\Http\Controllers\FacebookController@posts')->name('fb_posts');
+
+    
     Route::post('save_setting','App\Http\Controllers\ShopController@saveSetting')->name('saveSetting');
     Route::post('get_settings','App\Http\Controllers\ShopController@getSettings')->name('getSettings');
 

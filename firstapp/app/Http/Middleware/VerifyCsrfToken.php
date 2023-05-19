@@ -23,5 +23,7 @@ class VerifyCsrfToken extends Middleware
         'uninstall',
         'get_variants',
         'get_settings',
+        'fb_login',
+        'fb_posts',
     ];
 }

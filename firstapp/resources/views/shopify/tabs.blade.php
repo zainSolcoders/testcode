@@ -1,4 +1,10 @@
 <ul class="nav nav-tabs" id="myTab" role="tablist">
+
+
+<li class="nav-item" role="presentation">
+        <button class="nav-link" id="login-tab" data-bs-toggle="tab" data-bs-target="#login" type="button" role="tab" aria-controls="login" aria-selected="false">Social Login</button>
+    </li>
+
 <li class="nav-item" role="presentation">
         <button class="nav-link" id="orders-tab" data-bs-toggle="tab" data-bs-target="#orders" type="button" role="tab" aria-controls="orders" aria-selected="false">Orders</button>
     </li>
